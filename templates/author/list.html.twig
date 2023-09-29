@@ -1,0 +1,36 @@
+le nombre d'auteurs est {{ authors | length }}.
+<br>
+
+{% set nb = 0 %}
+{% for a in authors %}
+    {% set nb = nb + a.nb_books %}
+{% endfor %}
+Total books = {{ nb }}
+<br>
+
+{% if authors is defined  %}
+    {% if authors is empty %}
+        No authors found
+        {% else %}
+<table>
+    <tr>
+        <th>Id</th>
+        <th>username</th>
+        <th>Email</th>
+        <th>nb_books</th>
+        <th>picture</th>
+    </tr>
+{% for a in authors | reverse %}
+        <tr>
+        <td>{{ a.id }}</td>
+        <td>{{ a.username | lower | upper | capitalize }}</td>
+        <td>{{ a.email }}</td>
+        <td>{{ a.nb_books}}</td>
+        <td><img src="{{ asset(a.picture) }}" alt="image author" width=100> </td>
+    </tr>
+{% endfor %}
+</table>
+    {% endif %}
+    {% else %}
+    The requested list is not defined
+{% endif %}
